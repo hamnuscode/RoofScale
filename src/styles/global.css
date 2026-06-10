@@ -288,10 +288,25 @@ body {
 /* =========================================================
    SYSTEM (scroll-driven growth chart)
    ========================================================= */
-.system { background: var(--limewash); }
-.system__chart { position: relative; margin-top: clamp(1rem, 3vw, 2.5rem); }
+.system { background: var(--limewash); position: relative; }
+.system__chart { position: relative; margin-top: clamp(1rem, 3vw, 2vw); display: flex; justify-content: center; }
 .system__svg { width: 100%; height: auto; display: block; overflow: visible; }
 .chart-label { text-transform: uppercase; letter-spacing: 0.02em; }
+
+/* Desktop: pin the section while the diagram draws, then release to scroll on. */
+@media (min-width: 761px) {
+  .system { min-height: 200vh; padding-block: 0; }
+  .system__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .system__sticky .wrap { width: 100%; }
+  .system__svg { max-height: 62vh; }
+}
 
 /* Mobile vertical flow (hidden on desktop) */
 .system-steps { display: none; list-style: none; position: relative; }
