@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import Reveal, { staggerParent, staggerChild } from './Reveal.jsx'
+import TiltCard from './TiltCard.jsx'
 
 const PAINS = [
   'Homeowners call and nobody answers',
@@ -25,10 +26,10 @@ export default function Problem() {
           viewport={{ once: true, margin: '0px 0px -10% 0px' }}
         >
           {PAINS.map((text, i) => (
-            <motion.li className="pain-card" key={i} variants={reduce ? undefined : staggerChild}>
+            <TiltCard as="li" className="pain-card" key={i} variants={reduce ? undefined : staggerChild}>
               <span className="pain-x" aria-hidden="true">&#10005;</span>
               {text}
-            </motion.li>
+            </TiltCard>
           ))}
         </motion.ul>
       </div>

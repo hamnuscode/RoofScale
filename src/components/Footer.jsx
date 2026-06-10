@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import AnimatedBackground from './AnimatedBackground.jsx'
 
 function RoofMark() {
   return (
@@ -23,6 +24,7 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      <AnimatedBackground variant="dark" />
       <div className="wrap">
         <div className="footer__top">
           <div>

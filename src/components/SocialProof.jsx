@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import Reveal, { staggerParent, staggerChild } from './Reveal.jsx'
+import TiltCard from './TiltCard.jsx'
 
 /* Three greyed "coming soon" slots. Future testimonial format:
    before/after Google review counts ("8 to 23 reviews in 6 weeks"),
@@ -24,11 +25,11 @@ export default function SocialProof() {
           viewport={{ once: true, margin: '0px 0px -10% 0px' }}
         >
           {SLOTS.map((i) => (
-            <motion.article className="proof-card" key={i} aria-hidden="true" variants={reduce ? undefined : staggerChild}>
+            <TiltCard as="article" className="proof-card" key={i} aria-hidden="true" max={7} variants={reduce ? undefined : staggerChild}>
               <div className="proof-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
               <p className="proof-card__body">Testimonial coming soon</p>
               <p className="proof-card__meta">Owner name &middot; City, ST</p>
-            </motion.article>
+            </TiltCard>
           ))}
         </motion.div>
       </div>

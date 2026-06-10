@@ -1,4 +1,5 @@
 import Reveal from './Reveal.jsx'
+import AnimatedBackground from './AnimatedBackground.jsx'
 
 const ROWS = [
   { label: 'Average roofing job', value: '$8,000 to $12,000' },
@@ -8,6 +9,7 @@ const ROWS = [
 export default function ROI() {
   return (
     <section className="section roi" id="roi" aria-labelledby="roi-h">
+      <AnimatedBackground variant="dark" />
       <div className="wrap wrap--narrow">
         <Reveal as="h2" className="section-h section-h--light" id="roi-h">The Math Is Simple</Reveal>
         <Reveal as="dl" className="estimate">

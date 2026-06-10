@@ -1,4 +1,8 @@
+import { lazy, Suspense } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import ErrorBoundary from './ErrorBoundary.jsx'
+
+const Hero3D = lazy(() => import('./Hero3D.jsx'))
 
 export default function Hero() {
   const reduce = useReducedMotion()
@@ -32,6 +36,14 @@ export default function Hero() {
           transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         />
       </svg>
+
+      <div className="hero__3d" aria-hidden="true">
+        <ErrorBoundary fallback={null}>
+          <Suspense fallback={null}>
+            <Hero3D />
+          </Suspense>
+        </ErrorBoundary>
+      </div>
 
       <motion.div className="hero__inner wrap" variants={container} initial="hidden" animate="show">
         <motion.p className="eyebrow" variants={item}>
