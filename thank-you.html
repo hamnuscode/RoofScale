@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Almost Booked — Watch This Before Your Call</title>
+  <meta name="description" content="Confirm your roofing growth audit and watch a short video before your call." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Schibsted+Grotesk:wght@400;500;600&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .ty { padding-block: clamp(4rem, 10vw, 8rem); background: var(--limewash); }
+    .ty__headline {
+      font-family: var(--font-display);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 0.95;
+      font-size: clamp(2.1rem, 5.5vw, 3.6rem);
+      color: var(--asphalt);
+      margin-bottom: 2rem;
+    }
+    .ty__note {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      color: var(--verdigris);
+      margin-bottom: 0.75rem;
+    }
+    .calendar {
+      margin-top: 2.5rem;
+      border: 2px dashed rgba(32,33,28,0.25);
+      border-radius: 4px;
+      padding: clamp(2rem, 6vw, 3.5rem);
+      text-align: center;
+      background: var(--patina-mist);
+      color: var(--asphalt);
+    }
+    .calendar p { font-weight: 500; }
+    .next {
+      margin-top: 3rem;
+      list-style: none;
+      counter-reset: step;
+      display: grid;
+      gap: 1rem;
+    }
+    .next li {
+      counter-increment: step;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    .next li::before {
+      content: counter(step);
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--verdigris);
+      color: var(--limewash);
+      font-family: var(--font-mono);
+    }
+    .next h2 { /* visually hidden heading kept for semantics */ }
+  </style>
+</head>
+<body>
+  <main class="ty">
+    <div class="wrap wrap--narrow">
+      <h1 class="ty__headline">You're Almost Booked — Watch This Before Your Call</h1>
+
+      <!-- VSL #2: a short 60–90 second video here reduces no-shows after booking. -->
+      <p class="ty__note">60–90 seconds. Watch before your call.</p>
+      <div class="video">
+        <div class="video__frame">
+          <div class="video__poster">
+            <p class="video__poster-text">Here's exactly what we'll cover on your audit call.</p>
+            <button class="video__play" type="button" aria-label="Play the video">
+              <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+                <circle cx="50" cy="50" r="48" fill="var(--verdigris)" />
+                <polygon points="40,32 40,68 70,50" fill="var(--limewash)" />
+              </svg>
+            </button>
+          </div>
+          <!-- Replace .video__poster with the real 60–90s VSL #2 embed when ready -->
+        </div>
+      </div>
+
+      <div class="calendar">
+        <!-- Calendly/Cal.com embed here -->
+        <p>Pick a time that works for you. (Calendar embed loads here.)</p>
+      </div>
+
+      <h2 class="section-h" style="font-size:clamp(1.5rem,4vw,2.2rem); margin-top:3.5rem; margin-bottom:0;">What happens next</h2>
+      <ol class="next">
+        <li>Choose your time slot above — you'll get an instant confirmation by text and email.</li>
+        <li>We review your business beforehand so the call is all strategy, no fluff.</li>
+        <li>On the call we map your custom 90-day growth plan and show you the numbers.</li>
+      </ol>
+    </div>
+  </main>
+
+  <script>
+    // Optional: tailor messaging by qualification flag (?q=1 qualified, ?q=0 not).
+    (function () {
+      var q = new URLSearchParams(window.location.search).get('q');
+      var headline = document.querySelector('.ty__headline');
+      if (q === '0' && headline) {
+        headline.textContent = "Thanks — We've Got Your Application";
+        var note = document.querySelector('.ty__note');
+        if (note) note.textContent = 'Watch this while our team reviews your application.';
+      }
+    })();
+  </script>
+</body>
+</html>
