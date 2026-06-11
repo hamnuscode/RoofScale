@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, RoundedBox, ContactShadows, Sparkles } from '@react-three/drei'
+import { Float, RoundedBox, Sparkles } from '@react-three/drei'
 import { useReducedMotion } from 'framer-motion'
 
 const VERDIGRIS = '#2E6E5E'
@@ -9,20 +9,25 @@ const ASPHALT = '#20211C'
 const PATINA = '#DCE5DD'
 const LIMEWASH = '#F2EFE6'
 
-function House() {
+function House({ reduce }) {
+  const ref = useRef(null)
+  // Self-rotating — gentle continuous spin, no cursor input.
+  useFrame((_, delta) => {
+    if (ref.current && !reduce) ref.current.rotation.y += delta * 0.25
+  })
   return (
-    <group>
+    <group ref={ref} rotation={[0, -0.5, 0]}>
       {/* building */}
       <RoundedBox args={[2.5, 1.35, 2.5]} radius={0.06} smoothness={4} position={[0, -1.05, 0]}>
         <meshStandardMaterial color={LIMEWASH} roughness={0.7} metalness={0.05} />
       </RoundedBox>
-      {/* two windows */}
-      <mesh position={[-0.55, -1.0, 1.27]}>
-        <boxGeometry args={[0.5, 0.5, 0.04]} />
+      {/* windows (flush, inset) */}
+      <mesh position={[-0.55, -1.0, 1.255]}>
+        <boxGeometry args={[0.5, 0.5, 0.02]} />
         <meshStandardMaterial color={VERDIGRIS} roughness={0.4} metalness={0.2} />
       </mesh>
-      <mesh position={[0.55, -1.0, 1.27]}>
-        <boxGeometry args={[0.5, 0.5, 0.04]} />
+      <mesh position={[0.55, -1.0, 1.255]}>
+        <boxGeometry args={[0.5, 0.5, 0.02]} />
         <meshStandardMaterial color={VERDIGRIS} roughness={0.4} metalness={0.2} />
       </mesh>
       {/* faceted hip roof (4-sided pyramid) */}
@@ -50,41 +55,20 @@ function Shingle({ position, color, speed }) {
 }
 
 function Scene({ reduce }) {
-  const outer = useRef(null)
-  const inner = useRef(null)
-
-  useFrame((state, delta) => {
-    if (reduce) {
-      if (outer.current) outer.current.rotation.set(-0.05, -0.5, 0)
-      return
-    }
-    const d = Math.min(1, delta * 2.5)
-    if (inner.current) inner.current.rotation.y += delta * 0.16
-    if (outer.current) {
-      const tx = -state.pointer.y * 0.28
-      const ty = state.pointer.x * 0.42
-      outer.current.rotation.x += (tx - outer.current.rotation.x) * d
-      outer.current.rotation.y += (ty - outer.current.rotation.y) * d
-    }
-  })
-
   return (
     <>
-      <group ref={outer}>
-        <group ref={inner}>
-          <Float speed={1.2} rotationIntensity={0.35} floatIntensity={0.7}>
-            <House />
-          </Float>
-        </group>
-        <Shingle position={[-2.5, 1.6, 0.4]} color={PATINA} speed={1.5} />
-        <Shingle position={[2.6, 1.0, -0.5]} color={LIMEWASH} speed={1.1} />
-        <Shingle position={[2.2, -1.3, 0.7]} color={PATINA} speed={1.7} />
-        <Shingle position={[-2.3, -0.7, -0.3]} color={VERDIGRIS_DK} speed={1.3} />
-        <Shingle position={[0.3, 2.4, -0.7]} color={PATINA} speed={1.9} />
-      </group>
+      <Float speed={reduce ? 0 : 1.1} rotationIntensity={reduce ? 0 : 0.25} floatIntensity={reduce ? 0 : 0.6}>
+        <House reduce={reduce} />
+      </Float>
 
-      <Sparkles count={42} scale={[9, 6, 5]} size={2.4} speed={reduce ? 0 : 0.3} opacity={0.55} color={VERDIGRIS} />
-      <ContactShadows position={[0, -2.2, 0]} opacity={0.32} scale={13} blur={2.8} far={4.5} color={ASPHALT} />
+      {/* shingles bob in place, well clear of the house */}
+      <Shingle position={[-3.3, 1.9, -0.4]} color={PATINA} speed={1.5} />
+      <Shingle position={[3.4, 1.2, -0.8]} color={LIMEWASH} speed={1.1} />
+      <Shingle position={[3.0, -1.6, 0.4]} color={PATINA} speed={1.7} />
+      <Shingle position={[-3.1, -1.0, -0.6]} color={VERDIGRIS_DK} speed={1.3} />
+      <Shingle position={[0.5, 3.0, -1.0]} color={PATINA} speed={1.9} />
+
+      <Sparkles count={42} scale={[10, 7, 5]} size={2.4} speed={reduce ? 0 : 0.3} opacity={0.5} color={VERDIGRIS} />
     </>
   )
 }
@@ -97,8 +81,6 @@ export default function Hero3D() {
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true }}
       frameloop={reduce ? 'demand' : 'always'}
-      eventSource={typeof document !== 'undefined' ? document.documentElement : undefined}
-      eventPrefix="client"
       style={{ background: 'transparent' }}
     >
       <ambientLight intensity={0.65} />
