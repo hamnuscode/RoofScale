@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion'
 
 const LINKS = [
@@ -21,6 +22,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const reduce = useReducedMotion()
   const { scrollY } = useScroll()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const onHome = pathname === '/'
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     const next = y > 48
@@ -28,10 +32,20 @@ export default function Navbar() {
   })
 
   const handleAnchor = (e, href) => {
-    const el = document.querySelector(href)
-    if (!el) return
     e.preventDefault()
-    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+    if (onHome) {
+      const el = document.querySelector(href)
+      if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+    } else {
+      // off the landing page: route home, then ScrollManager handles the hash.
+      navigate(`/${href}`)
+    }
+  }
+
+  const handleBrand = (e) => {
+    e.preventDefault()
+    if (onHome) window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
+    else navigate('/')
   }
 
   return (
@@ -47,11 +61,7 @@ export default function Navbar() {
       }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
     >
-      <a
-        href="#top"
-        className="nav__brand"
-        onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }) }}
-      >
+      <a href={onHome ? '#top' : '/'} className="nav__brand" onClick={handleBrand}>
         <RoofMark />
         RoofScale
       </a>

@@ -1,6 +1,7 @@
 import { useSearchParams, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
 
 export default function ThankYou() {
@@ -27,6 +28,7 @@ export default function ThankYou() {
 
   return (
     <>
+      <Navbar />
       <main className="ty">
         <motion.div className="wrap wrap--narrow" variants={container} initial="hidden" animate="show">
           <motion.h1 className="ty__headline" variants={item}>{headline}</motion.h1>
