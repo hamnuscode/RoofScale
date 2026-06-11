@@ -179,7 +179,28 @@ body {
   overflow: hidden;
 }
 .hero__pitch { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-.hero__inner { position: relative; z-index: 1; max-width: 980px; }
+.hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+.hero__copy { max-width: 38rem; }
+.hero__actions { margin-top: 0.25rem; }
+.hero__visual {
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 44vw, 560px);
+  pointer-events: none;
+}
+.hero__visual canvas { display: block; }
+@media (max-width: 920px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 1rem; }
+  .hero__copy { max-width: none; }
+  .hero__visual { height: clamp(300px, 70vw, 420px); order: -1; }
+}
 .eyebrow {
   display: inline-block;
   font-family: var(--font-mono);
@@ -197,15 +218,15 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.015em;
-  line-height: 0.92;
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  line-height: 0.94;
+  font-size: clamp(2.4rem, 4.6vw, 4rem);
   color: var(--asphalt);
   margin-bottom: 1.5rem;
 }
 .hero__sub {
-  font-size: clamp(1.05rem, 2.4vw, 1.4rem);
-  max-width: 62ch;
-  margin-bottom: 2.25rem;
+  font-size: clamp(1.02rem, 2.2vw, 1.3rem);
+  max-width: 52ch;
+  margin-bottom: 2rem;
 }
 .hero__trust {
   margin-top: 2rem;
@@ -394,40 +415,83 @@ body {
   line-height: 0.95;
   font-size: clamp(1.9rem, 4.6vw, 3rem);
   color: var(--copper);
-  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+  margin-bottom: 0.75rem;
 }
-.form { display: grid; gap: 1.5rem; }
-.field { display: grid; gap: 0.5rem; border: none; }
-.field > label, .field > legend { font-weight: 600; font-size: 1rem; color: var(--asphalt); }
-.field input[type="text"], .field input[type="tel"], .field select {
+.apply-sub {
+  font-size: 1.05rem;
+  color: rgba(32,33,28,0.7);
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.form-card {
+  display: grid;
+  gap: 1.4rem;
+  background: #fff;
+  border: 1px solid rgba(32,33,28,0.08);
+  border-radius: 16px;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  box-shadow: 0 34px 70px -45px rgba(32,33,28,0.5);
+}
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+.field { display: grid; gap: 0.55rem; border: none; min-width: 0; padding: 0; margin: 0; }
+.field > label, .field > legend { font-weight: 600; font-size: 0.98rem; color: var(--asphalt); padding: 0; }
+.field > legend { margin-bottom: 0.35rem; }
+
+.input {
   font-family: var(--font-body);
   font-size: 1rem;
-  padding: 0.85rem 1rem;
-  background: #fff;
-  border: 2px solid rgba(32,33,28,0.18);
-  border-radius: 4px;
+  padding: 0.9rem 1.05rem;
+  background: #FAF8F2;
+  border: 1.5px solid rgba(32,33,28,0.14);
+  border-radius: 10px;
   color: var(--asphalt);
   width: 100%;
-  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
 }
-.field input:focus, .field select:focus {
+.input::placeholder { color: rgba(32,33,28,0.4); }
+.input:focus {
   outline: none;
+  background: #fff;
   border-color: var(--verdigris);
-  box-shadow: 0 0 0 3px rgba(46,110,94,0.25);
+  box-shadow: 0 0 0 4px rgba(46,110,94,0.16);
 }
-.field input.invalid, .field select.invalid { border-color: var(--rust-red); }
-.checks, .radios { display: grid; gap: 0.6rem; margin-top: 0.25rem; }
-.checks { grid-template-columns: repeat(2, 1fr); }
-.check, .radio {
-  display: flex; align-items: center; gap: 0.6rem; cursor: pointer;
-  padding: 0.6rem 0.8rem;
-  border: 1.5px solid rgba(32,33,28,0.14);
-  border-radius: 4px;
-  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+.input.invalid { border-color: var(--rust-red); box-shadow: 0 0 0 4px rgba(166,59,42,0.12); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.15rem; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.62rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(32,33,28,0.16);
+  background: #FAF8F2;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--asphalt);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
-.check:hover, .radio:hover { border-color: var(--verdigris); background: rgba(46,110,94,0.06); }
-.check input, .radio input { accent-color: var(--verdigris); width: 1.1rem; height: 1.1rem; flex: none; }
-.err { color: var(--rust-red); font-size: 0.85rem; font-weight: 500; }
+.chip:hover { border-color: var(--verdigris); background: #fff; }
+.chip--on {
+  background: var(--verdigris);
+  border-color: var(--verdigris);
+  color: var(--limewash);
+  box-shadow: 0 10px 20px -10px rgba(46,110,94,0.75);
+}
+.chip__check {
+  display: inline-grid;
+  place-items: center;
+  width: 0;
+  overflow: hidden;
+  font-weight: 700;
+  line-height: 1;
+  transition: width 0.2s var(--ease);
+}
+.chip--on .chip__check { width: 1em; }
+.form-card__submit { margin-top: 0.4rem; }
+.err { color: var(--rust-red); font-size: 0.85rem; font-weight: 500; margin: 0; }
 
 /* =========================================================
    OBJECTIONS
@@ -514,20 +578,6 @@ body {
    3D / WOW ELEMENTS
    ========================================================= */
 
-/* Hero 3D canvas layer (sits behind the hero text) */
-.hero__3d {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(56%, 760px);
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 100%);
-  mask-image: linear-gradient(to right, transparent, #000 22%, #000 100%);
-}
-.hero__3d canvas { display: block; }
-
 /* Tilt cards */
 .pain-grid,
 .proof-grid { perspective: 1100px; }
@@ -580,14 +630,7 @@ body {
   .footer__top { grid-template-columns: 1fr; }
   .system__chart { display: none; }
   .system-steps { display: grid; }
-  .hero__3d {
-    width: 82%;
-    height: 52%;
-    top: 4.5rem;
-    opacity: 0.6;
-    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
-    mask-image: linear-gradient(to bottom, #000 55%, transparent);
-  }
+  .field-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 380px) { .video__poster-text { font-size: 1.2rem; } }
 
