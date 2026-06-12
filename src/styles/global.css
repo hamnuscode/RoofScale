@@ -183,7 +183,7 @@ body {
 .hero {
   position: relative;
   background: var(--limewash);
-  padding-block: clamp(6.5rem, 12vw, 9rem) clamp(2rem, 4vw, 3rem);
+  padding-block: clamp(6.5rem, 12vw, 9rem) clamp(7.5rem, 22vw, 15rem);
   overflow: hidden;
 }
 .hero__pitch { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
@@ -237,7 +237,9 @@ body {
 /* =========================================================
    VSL
    ========================================================= */
-.vsl { padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem); }
+.vsl { padding-block: 0 clamp(2rem, 4vw, 3rem); }
+/* Pull the video up so its top half overlaps into the hero. */
+.video { position: relative; z-index: 3; margin-top: clamp(-13rem, -20vw, -6rem); }
 .video__frame {
   position: relative;
   aspect-ratio: 16 / 9;
