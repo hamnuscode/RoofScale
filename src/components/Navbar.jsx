@@ -2,12 +2,6 @@ import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion'
 
-const LINKS = [
-  { href: '#system', label: 'The System' },
-  { href: '#roi', label: 'The Math' },
-  { href: '#proof', label: 'Results' },
-]
-
 function RoofMark() {
   return (
     <span className="nav__mark" aria-hidden="true">
@@ -65,16 +59,6 @@ export default function Navbar() {
         <RoofMark />
         RoofScale
       </a>
-
-      <ul className="nav__links">
-        {LINKS.map((l) => (
-          <li key={l.href}>
-            <a className="nav__link" href={l.href} onClick={(e) => handleAnchor(e, l.href)}>
-              {l.label}
-            </a>
-          </li>
-        ))}
-      </ul>
 
       <motion.a
         href="#apply"
