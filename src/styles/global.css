@@ -383,13 +383,15 @@ body {
 .proof { background: var(--patina-mist); padding-block: clamp(2.75rem, 5vw, 4.5rem); }
 .proof__lead {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  line-height: 1.08;
-  font-size: clamp(1.3rem, 2.6vw, 2rem);
-  max-width: 40ch;
+  line-height: 1.06;
+  letter-spacing: -0.005em;
+  font-size: clamp(1.5rem, 2.9vw, 2.25rem);
+  max-width: 70rem;
   margin: 0 auto clamp(2rem, 4vw, 3rem);
   text-align: center;
+  text-wrap: balance;
   color: var(--asphalt);
 }
 .proof__cta { text-align: center; margin-top: clamp(2rem, 4vw, 3rem); }
