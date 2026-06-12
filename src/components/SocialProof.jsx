@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import Reveal, { staggerParent, staggerChild } from './Reveal.jsx'
 import TiltCard from './TiltCard.jsx'
+import CTAButton from './CTAButton.jsx'
 
 /* Three greyed "coming soon" slots. Future testimonial format:
    before/after Google review counts ("8 to 23 reviews in 6 weeks"),
@@ -32,6 +33,10 @@ export default function SocialProof() {
             </TiltCard>
           ))}
         </motion.div>
+
+        <Reveal className="proof__cta" delay={0.05}>
+          <CTAButton>Apply For Your Free Audit</CTAButton>
+        </Reveal>
       </div>
     </section>
   )

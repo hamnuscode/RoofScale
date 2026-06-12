@@ -1,32 +1,23 @@
-import { lazy, Suspense } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import ErrorBoundary from './ErrorBoundary.jsx'
-
-const Hero3D = lazy(() => import('./Hero3D.jsx'))
+import CTAButton from './CTAButton.jsx'
 
 export default function Hero() {
   const reduce = useReducedMotion()
 
   const container = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+    show: { transition: { staggerChildren: 0.12, delayChildren: 0.08 } },
   }
   const item = {
     hidden: reduce ? { opacity: 1 } : { opacity: 0, y: 26 },
     show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
   }
 
-  const scrollToForm = (e) => {
-    e.preventDefault()
-    const el = document.querySelector('#apply')
-    if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
-  }
-
   return (
     <header className="hero" id="top">
       <svg className="hero__pitch" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <motion.polyline
-          points="-50,540 420,240 640,140 860,240 1490,540"
+          points="-50,540 460,260 720,150 980,260 1490,540"
           fill="none"
           stroke="var(--verdigris)"
           strokeWidth="2"
@@ -37,48 +28,24 @@ export default function Hero() {
         />
       </svg>
 
-      <div className="hero__grid wrap">
-        <motion.div className="hero__copy" variants={container} initial="hidden" animate="show">
-          <motion.p className="eyebrow" variants={item}>
-            For Roofing Companies Doing 4+ Jobs/Month
-          </motion.p>
-          <motion.h1 className="hero__headline" variants={item}>
-            Double Your Roofing Revenue In 90 Days Without Hiring More Staff
-          </motion.h1>
-          <motion.p className="hero__sub" variants={item}>
-            We build your entire growth system: website, funnels, SEO, content, automation, and AI tools.
-            You close more jobs, spend less, and never miss a lead again.
-          </motion.p>
-          <motion.div className="hero__actions" variants={item}>
-            <motion.a
-              href="#apply"
-              className="btn btn--cta"
-              onClick={scrollToForm}
-              whileHover={reduce ? {} : { y: -2, x: -2, boxShadow: '6px 6px 0 var(--asphalt)' }}
-              whileTap={reduce ? {} : { y: 2, x: 2, boxShadow: '2px 2px 0 var(--asphalt)' }}
-            >
-              <span className="btn__arrow">&rarr;</span> See If Your Business Qualifies
-            </motion.a>
-          </motion.div>
-          <motion.p className="hero__trust" variants={item}>
-            Built for roofing crews. No agency jargon, no wasted retainer.
-          </motion.p>
+      <motion.div className="hero__inner wrap" variants={container} initial="hidden" animate="show">
+        <motion.p className="eyebrow" variants={item}>
+          For Roofing Companies Doing 4+ Jobs/Month
+        </motion.p>
+        <motion.h1 className="hero__headline" variants={item}>
+          Increase Your Roofing Revenue By Up To 30% In 90 Days
+        </motion.h1>
+        <motion.p className="hero__sub" variants={item}>
+          We build your full growth setup. Website, funnels, SEO, content, automation, and AI tools.
+          You close more jobs, spend less, and stop missing leads.
+        </motion.p>
+        <motion.div className="hero__actions" variants={item}>
+          <CTAButton>See If Your Business Qualifies</CTAButton>
         </motion.div>
-
-        <motion.div
-          className="hero__visual"
-          initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-          animate={reduce ? {} : { opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
-          aria-hidden="true"
-        >
-          <ErrorBoundary fallback={null}>
-            <Suspense fallback={null}>
-              <Hero3D />
-            </Suspense>
-          </ErrorBoundary>
-        </motion.div>
-      </div>
+        <motion.p className="hero__trust" variants={item}>
+          Built for roofing crews. No agency jargon, no wasted retainer.
+        </motion.p>
+      </motion.div>
     </header>
   )
 }

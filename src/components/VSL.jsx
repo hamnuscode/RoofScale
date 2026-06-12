@@ -1,10 +1,16 @@
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import Reveal from './Reveal.jsx'
+import CTAButton from './CTAButton.jsx'
+
+const POINTS = [
+  'Built only for roofing companies',
+  'See the exact system we install',
+  'Results in your first 30 days',
+]
 
 /* VSL sits ABOVE the form on purpose: warming the visitor with video first
-   converts much better than sending cold traffic straight to a form.
-   Do not move it below the form. */
+   converts much better than sending cold traffic straight to a form. */
 export default function VSL() {
   const [playing, setPlaying] = useState(false)
   const reduce = useReducedMotion()
@@ -15,7 +21,6 @@ export default function VSL() {
         <Reveal className="video">
           <div className="video__frame">
             {playing ? (
-              // Swap this iframe src for your real VSL (YouTube/Wistia/Vimeo).
               <iframe
                 title="RoofScale sales video"
                 src="about:blank"
@@ -42,6 +47,15 @@ export default function VSL() {
             )}
           </div>
           <p className="video__caption" id="vsl-cap">2 to 4 minutes. Watch this before you apply.</p>
+        </Reveal>
+
+        <Reveal className="vsl__cta" delay={0.05}>
+          <ul className="vsl__points" role="list">
+            {POINTS.map((p) => (
+              <li key={p}><span className="tick" aria-hidden="true">&#10003;</span> {p}</li>
+            ))}
+          </ul>
+          <CTAButton size="lg">I'm Ready To Scale</CTAButton>
         </Reveal>
       </div>
     </section>
